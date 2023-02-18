@@ -4,8 +4,8 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 from matplotlib import pyplot as plt
-from matplotlib.figure import Figure as FigureMPL
 from matplotlib.axis import Axis as AxisMPL
+from matplotlib.figure import Figure as FigureMPL
 from matplotlib.gridspec import GridSpec
 from sbmlutils import log
 
@@ -205,8 +205,6 @@ class MatplotlibFigureSerializer:
                             if len(yerr.shape) == 2
                             else yerr.magnitude
                         )
-
-                    # FIXME: !!!
 
                     kwargs: Dict[str, Any] = {}
                     if curve.style:

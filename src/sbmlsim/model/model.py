@@ -52,6 +52,7 @@ class AbstractModel(object):
         changes: Dict = None,
         selections: List[str] = None,
     ):
+        """Initialize SourceType."""
 
         if not language and not language_type:
             raise ValueError(
@@ -216,6 +217,4 @@ class AbstractModel(object):
             return Selection(target.id, target.type)
 
         else:
-            warnings.warn(f"Unrecognized Selection in variable: {var}")
-            return None
-    '''
+            warnings.warn(f"Unrecognized Selection in variable: {var}

@@ -10,6 +10,7 @@ class Task:
     """
 
     def __init__(self, model: str, simulation: str, sid: str = None, name: str = None):
+        """Initialize Task."""
         if not isinstance(model, str):
             raise ValueError(
                 f"Reference to a model must be a string model key, "
@@ -37,6 +38,4 @@ class Task:
         """Convert to dictionary."""
         d = {
             "model": self.model_id,
-            "simulation": self.simulation_id,
-        }
-        return d
+            "simulation": self.simulation_id

@@ -154,6 +154,8 @@ class FitExperiment:
 
 @dataclass
 class MappingMetaData:
+    """Metadata for mapping."""
+
     pass
 
 
@@ -306,6 +308,7 @@ class FitData:
         task: Optional[str] = None,
         function: Optional[str] = None,
     ):
+        """Initialize FitData."""
 
         self.experiment = experiment
         self.dset_id = dataset
@@ -391,8 +394,10 @@ class FitData:
 
     def __str__(self) -> str:
         """Get string."""
-        return f"FitData(experiment={self.experiment.__class__.__name__} dset_id={self.dset_id} " \
-               f"task_id={self.task_id} function={self.function})"
+        return (
+            f"FitData(experiment={self.experiment.__class__.__name__} dset_id={self.dset_id} "
+            f"task_id={self.task_id} function={self.function})"
+        )
 
     def is_task(self) -> bool:
         """Check if FitData comes from a task (simulation)."""
@@ -441,13 +446,9 @@ class FitDataInitialized:
     """
 
     def __init__(self):
+        """Initialize FitDataInitialized."""
         self.x = None
         self.y = None
         self.x_sd = None
         self.x_se = None
         self.y_sd = None
-        self.y_se = None
-
-    def __str__(self) -> str:
-        """Get string representation."""
-        return str(self.__dict__)

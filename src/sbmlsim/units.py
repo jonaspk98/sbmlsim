@@ -13,7 +13,6 @@ from sbmlutils import log
 from sbmlutils.console import console
 from sbmlutils.io import read_sbml
 
-
 # Disable Pint's old fallback behavior (must come before importing Pint)
 os.environ["PINT_ARRAY_PROTOCOL_FALLBACK"] = "0"
 
@@ -22,7 +21,6 @@ import warnings
 import pint
 from pint import Quantity, UnitRegistry
 from pint.errors import DimensionalityError, UndefinedUnitError
-
 
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
@@ -191,6 +189,7 @@ class UnitsInformation(MutableMapping):
 
         # create sid to unit mapping
         model: libsbml.Model = doc.getModel()
+
         if not model:
             ValueError(f"No model found in SBMLDocument: {doc}")
 
@@ -248,8 +247,15 @@ class UnitsInformation(MutableMapping):
                         udict[f"[{sid}]"] = ""
 
                 elif isinstance(element, (libsbml.Compartment, libsbml.Parameter)):
-                    # udict[sid] = uid_dict[element.getUnits()]
-                    udict[sid] = element.getUnits()
+                    # the actual identifiers can not be used with pint, except for
+                    # when they are named like actual pint unit strings.
+                    # Therefore, the value of the name element is set, because this is
+                    # typically a pint conform str unit defined in the model class.
+                    if element.getUnits() in UnitsInformation.sbml_uids:
+                        udict[sid] = element.getUnits()
+                    else:
+                        udict[sid] = model.getUnitDefinition(element.getUnits()).getName()
+
                 else:
                     udef: libsbml.UnitDefinition = element.getDerivedUnitDefinition()
                     if udef is None:
